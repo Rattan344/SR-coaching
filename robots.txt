@@ -1,4 +1,4 @@
 User-agent: *
-Allow: /sitemap.xml
+Allow: /map.xml
 
-Sitemap: https://rattan344.github.io/SR-coaching/sitemap.xml
+Sitemap: https://rattan344.github.io/SR-coaching/map.xml
