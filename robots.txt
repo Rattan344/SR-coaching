@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://rattan344.github.io/SR-coaching/sitemap.xml
