@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blogs - SR Coaching Centre</title>
+    <link rel="icon" type="image/png" href="lo.jpeg">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #ffc107;
+            --dark-color: #343a40;
+            --light-color: #f8f9fa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        .navbar {
+            backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.9) !important;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .navbar-brand img {
+            height: 40px;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-brand:hover img {
+            transform: rotate(360deg);
+        }
+
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 80%;
+        }
+
+        /* Hero Section */
+        .blog-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 100px 0 60px;
+            color: white;
+            text-align: center;
+        }
+
+        .blog-hero h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .blog-hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Blog Cards */
+        .blog-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+        }
+
+        .blog-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            position: relative;
+        }
+
+        .blog-category {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--accent-color);
+            color: var(--dark-color);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .blog-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .blog-meta i {
+            color: var(--primary-color);
+        }
+
+        .blog-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+        }
+
+        .blog-excerpt {
+            color: #666;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .read-more-btn {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            align-self: flex-start;
+        }
+
+        .read-more-btn:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Categories Filter */
+        .categories-filter {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .filter-btn {
+            background: var(--light-color);
+            border: 2px solid transparent;
+            padding: 8px 20px;
+            border-radius: 25px;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        /* Search Box */
+        .search-box {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .search-input {
+            border: 2px solid var(--light-color);
+            border-radius: 25px;
+            padding: 12px 20px;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 15px rgba(102, 126, 234, 0.2);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+
+        /* Featured Badge */
+        .featured-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a6f);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .blog-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .blog-image {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="lo.jpeg" alt="SR Coaching Centre Logo">
+                SR Coaching Centre
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#courses">Courses</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="blogs.html">Blogs</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="blog-hero">
+        <div class="container">
+            <h1><i class="fas fa-blog"></i> Educational Insights & Tips</h1>
+            <p>Explore articles, study tips, and educational resources to excel in your academic journey</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container py-5">
+        <!-- Search Box -->
+        <div class="search-box">
+            <div class="input-group">
+                <span class="input-group-text bg-transparent border-0">
+                    <i class="fas fa-search text-primary"></i>
+                </span>
+                <input type="text" class="form-control search-input border-0" placeholder="Search articles..." id="searchInput">
+            </div>
+        </div>
+
+        <!-- Categories Filter -->
+        <div class="categories-filter text-center">
+            <h5 class="mb-3">Filter by Category</h5>
+            <button class="btn filter-btn active" data-category="all">All Posts</button>
+            <button class="btn filter-btn" data-category="study-tips">Study Tips</button>
+            <button class="btn filter-btn" data-category="science">Science</button>
+            <button class="btn filter-btn" data-category="commerce">Commerce</button>
+            <button class="btn filter-btn" data-category="technology">Technology</button>
+            <button class="btn filter-btn" data-category="motivation">Motivation</button>
+        </div>
+
+        <!-- Blog Grid -->
+        <div class="row g-4" id="blogGrid">
+            <!-- Blog Post 1 -->
+            <div class="col-md-6 col-lg-4 blog-item" data-category="study-tips">
+                <div class="blog-card">
+                    <div class="position-relative">
+                        <div class="blog-image bg-primary d-flex align-items-center justify-content-center">
+                            <i class="fas fa-brain fa-5x text-white"></i>
+                        </div>
+                        <span class="featured-badge">Featured</span>
+                        <span class="blog-category">Study Tips</span>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span><i class="far fa-calendar"></i> Oct 28, 2025</span>
+                            <span><i class="far fa-clock"></i> 5 min read</span>
+                        </div>
+                        <h3 class="blog-title">10 Proven Study Techniques for Board Exam Success</h3>
+                        <p class="blog-excerpt">Discover effective study methods that have helped hundreds of students achieve outstanding results in their board examinations.</p>
+                        <button class="read-more-btn">Read More <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blog Post 2 -->
+            <div class="col-md-6 col-lg-4 blog-item" data-category="science">
+                <div class="blog-card">
+                    <div class="position-relative">
+                        <div class="blog-image bg-success d-flex align-items-center justify-content-center">
+                            <i class="fas fa-atom fa-5x text-white"></i>
+                        </div>
+                        <span class="blog-category">Science</span>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span><i class="far fa-calendar"></i> Oct 25, 2025</span>
+                            <span><i class="far fa-clock"></i> 7 min read</span>
+                        </div>
+                        <h3 class="blog-title">Mastering Physics: Understanding Complex Concepts Simply</h3>
+                        <p class="blog-excerpt">Learn how to break down complex physics concepts into simple, easy-to-understand explanations with practical examples.</p>
+                        <button class="read-more-btn">Read More <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blog Post 3 -->
+            <div class="col-md-6 col-lg-4 blog-item" data-category="commerce">
+                <div class="blog-card">
+                    <div class="position-relative">
+                        <div class="blog-image bg-info d-flex align-items-center justify-content-center">
+                            <i class="fas fa-chart-line fa-5x text-white"></i>
+                        </div>
+                        <span class="blog-category">Commerce</span>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span><i class="far fa-calendar"></i> Oct 22, 2025</span>
+                            <span><i class="far fa-clock"></i> 6 min read</span>
+                        </div>
+                        <h3 class="blog-title">Accounting Basics: Your Complete Guide to Financial Success</h3>
+                        <p class="blog-excerpt">Master the fundamentals of accounting with this comprehensive guide designed for commerce students.</p>
+                        <button class="read-more-btn">Read More <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blog Post 4 -->
+            <div class="col-md-6 col-lg-4 blog-item" data-category="technology">
+                <div class="blog-card">
+                    <div class="position-relative">
+                        <div class="blog-image bg-warning d-flex align-items-center justify-content-center">
+                            <i class="fas fa-laptop-code fa-5x text-white"></i>
+                        </div>
+                        <span class="blog-category">Technology</span>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span><i class="far fa-calendar"></i> Oct 20, 2025</span>
+                            <span><i class="far fa-clock"></i> 8 min read</span>
+                        </div>
+                        <h3 class="blog-title">AI Tools Every Student Should Know in 2025</h3>
+                        <p class="blog-excerpt">Explore the latest AI tools and technologies that can enhance your learning experience and boost productivity.</p>
+                        <button class="read-more-btn">Read More <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blog Post 5 -->
+            <div class="col-md-6 col-lg-4 blog-item" data-category="motivation">
+                <div class="blog-card">
+                    <div class="position-relative">
+                        <div class="blog-image bg-danger d-flex align-items-center justify-content-center">
+                            <i class="fas fa-fire fa-5x text-white"></i>
+                        </div>
+                        <span class="blog-category">Motivation</span>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span><i class="far fa-calendar"></i> Oct 18, 2025</span>
+                            <span><i class="far fa-clock"></i> 4 min read</span>
+                        </div>
+                        <h3 class="blog-title">Overcoming Exam Anxiety: Mental Health Tips for Students</h3>
+                        <p class="blog-excerpt">Learn effective strategies to manage stress and maintain mental wellness during exam preparation.</p>
+                        <button class="read-more-btn">Read More <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blog Post 6 -->
+            <div class="col-md-6 col-lg-4 blog-item" data-category="study-tips">
+                <div class="blog-card">
+                    <div class="position-relative">
+                        <div class="blog-image bg-secondary d-flex align-items-center justify-content-center">
+                            <i class="fas fa-book-open fa-5x text-white"></i>
+                        </div>
+                        <span class="blog-category">Study Tips</span>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span><i class="far fa-calendar"></i> Oct 15, 2025</span>
+                            <span><i class="far fa-clock"></i> 5 min read</span>
+                        </div>
+                        <h3 class="blog-title">Creating the Perfect Study Schedule That Works</h3>
+                        <p class="blog-excerpt">Design an effective study timetable tailored to your learning style and maximize your productivity.</p>
+                        <button class="read-more-btn">Read More <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blog Post 7 -->
+            <div class="col-md-6 col-lg-4 blog-item" data-category="science">
+                <div class="blog-card">
+                    <div class="position-relative">
+                        <div class="blog-image bg-primary d-flex align-items-center justify-content-center">
+                            <i class="fas fa-flask fa-5x text-white"></i>
+                        </div>
+                        <span class="blog-category">Science</span>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span><i class="far fa-calendar"></i> Oct 12, 2025</span>
+                            <span><i class="far fa-clock"></i> 6 min read</span>
+                        </div>
+                        <h3 class="blog-title">Chemistry Made Easy: Understanding Organic Reactions</h3>
+                        <p class="blog-excerpt">Simplify organic chemistry reactions with visual guides and memory techniques for better retention.</p>
+                        <button class="read-more-btn">Read More <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blog Post 8 -->
+            <div class="col-md-6 col-lg-4 blog-item" data-category="commerce">
+                <div class="blog-card">
+                    <div class="position-relative">
+                        <div class="blog-image bg-success d-flex align-items-center justify-content-center">
+                            <i class="fas fa-coins fa-5x text-white"></i>
+                        </div>
+                        <span class="blog-category">Commerce</span>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span><i class="far fa-calendar"></i> Oct 10, 2025</span>
+                            <span><i class="far fa-clock"></i> 7 min read</span>
+                        </div>
+                        <h3 class="blog-title">Economics Explained: Demand and Supply Simplified</h3>
+                        <p class="blog-excerpt">Understand the fundamental concepts of economics through real-world examples and case studies.</p>
+                        <button class="read-more-btn">Read More <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blog Post 9 -->
+            <div class="col-md-6 col-lg-4 blog-item" data-category="technology">
+                <div class="blog-card">
+                    <div class="position-relative">
+                        <div class="blog-image bg-info d-flex align-items-center justify-content-center">
+                            <i class="fas fa-code fa-5x text-white"></i>
+                        </div>
+                        <span class="featured-badge">Featured</span>
+                        <span class="blog-category">Technology</span>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span><i class="far fa-calendar"></i> Oct 08, 2025</span>
+                            <span><i class="far fa-clock"></i> 10 min read</span>
+                        </div>
+                        <h3 class="blog-title">Beginner's Guide to Programming: Start Your Coding Journey</h3>
+                        <p class="blog-excerpt">Learn the basics of programming with step-by-step guidance on choosing your first language and building projects.</p>
+                        <button class="read-more-btn">Read More <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="mb-0">© 2025 SR Coaching Centre. All Rights Reserved.</p>
+                </div>
+                <div class="col-md-6">
+                    <a href="index.html" class="text-white text-decoration-none">Back to Main Site</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Category Filter
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const blogItems = document.querySelectorAll('.blog-item');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                this.classList.add('active');
+
+                const category = this.getAttribute('data-category');
+
+                blogItems.forEach(item => {
+                    if (category === 'all' || item.getAttribute('data-category') === category) {
+                        item.style.display = 'block';
+                        setTimeout(() => {
+                            item.style.opacity = '1';
+                            item.style.transform = 'scale(1)';
+                        }, 10);
+                    } else {
+                        item.style.opacity = '0';
+                        item.style.transform = 'scale(0.8)';
+                        setTimeout(() => {
+                            item.style.display = 'none';
+                        }, 300);
+                    }
+                });
+            });
+        });
+
+        // Search Functionality
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+
+            blogItems.forEach(item => {
+                const title = item.querySelector('.blog-title').textContent.toLowerCase();
+                const excerpt = item.querySelector('.blog-excerpt').textContent.toLowerCase();
+                const category = item.querySelector('.blog-category').textContent.toLowerCase();
+
+                if (title.includes(searchTerm) || excerpt.includes(searchTerm) || category.includes(searchTerm)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+
+        // Read More Button
+        document.querySelectorAll('.read-more-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                alert('Full blog article coming soon! This is a demo.');
+            });
+        });
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
